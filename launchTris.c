@@ -148,7 +148,7 @@ void tableauComparatif(int num )
 int main(void) {
   int request = 0;
   printf("Que voulez vous tester ?\n (0 = Tableau comparatif )\n (1 = Tri par insertion)\n (2 = Tri par sélection)\n (3 = Tri par échange)\n (4 = Shake sort)\n (5 = Shell sort)\n (6 = Heap sort)\n (7 = Quick sort)\n");
-  scanf("%d\n", &request);
+  scanf("%d", &request);
   //printf("%d\n", request);
 
   switch (request) {
