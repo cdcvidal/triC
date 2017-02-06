@@ -33,42 +33,44 @@ void insertSort(int tab[], int dim, float *temps)
   *temps = (float)(t2-t1) / (CLOCKS_PER_SEC);
 }
 
-void selectSort2(int tab[], int dim, float *temps)
+void selectionTri(int tab[], int dim, float *temps)
 {
-  int i, j;
+  int k = dim, pmax = 0, j;
   clock_t t1, t2;
   t1 = clock();
-  for(i = dim-1; i >=0 ; i--)
+
+  for(k = 0; k < dim-1; k++)
   {
-    for(j = 0; j < i ; j++)
+    pmax = k;
+    for(j= k+1; j<dim ; j++ )
     {
-      if(tab[j] > tab[i])
-        permute(&tab[j], &tab[i]);
+      if(tab[j] < tab[pmax])
+        pmax = j;
     }
+    permute(&tab[pmax], &tab[k]);
   }
+
   t2 = clock();
   *temps = (float)(t2-t1) / (CLOCKS_PER_SEC);
 }
 
-void selectSort(int tab[], int dim, float *temps)
+void echangeTri(int tab[], int dim, float *temps)
 {
-  int i, j;
+  int k, i;
   clock_t t1, t2;
   t1 = clock();
-  for(i = 0 ; i < dim ;i++)
+  for(k = dim-1; k >= 0; k--)
   {
-    for(j = i+1 ; j < dim ; j++)
+    for(i = 0 ; i < k+1 ; i++)
     {
-      if(tab[i] > tab[j]){
-        //printf("element a checher %d, element courant %d, position %d\n", tab[i], tab[j], j );
-        permute(&tab[j], &tab[i]);
+      if(tab[i] > tab[i+1]){
+        permute(&tab[i], &tab[i+1]);
       }
     }
   }
   t2 = clock();
   *temps = (float)(t2-t1) / (CLOCKS_PER_SEC);
 }
-
 
 void bubbleSort(int tab[], int dim, float *temps)
 {
