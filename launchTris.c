@@ -10,7 +10,7 @@ static int tabOrd[N];
 
 int tabInstruction[6] = {500,1000,10000,500,1000,10000};
 
-void (* listeFonctions[NBTRIS])(int *,int, float*) = {insertSort,selectSort,bubbleSortOpt,shakeSort,shellSort,heapSort,quickSort};
+void (* listeFonctions[NBTRIS])(int *,int, float*) = {insertSort,selectionTri,bubbleSortOpt,shakeSort,shellSort,heapSort,quickSort};
 
 void (* trouveFonction(int tri))(int *,int, float*)
 {
@@ -28,8 +28,6 @@ void lanceRandomTris(int tri, int dim, int passage, float *temps)
     cloneTab(tab, tabClone, dim);
     triDemande(tabClone, dim, temps);
     printf("numero tri = %d test tri %d\n", tri, testTri(tabClone, dim));
-    if(tri == 6)
-      displayTab(tabClone, dim);
     temp += *temps;
     i++;
   }
@@ -42,7 +40,6 @@ void lanceOrdonTris(int tri, int dim, float *temps)
   triDemande = trouveFonction(tri);
   ordonTab(tabOrd, dim);
   triDemande(tabOrd, dim, temps);
-  //printf("numero tri = %d test tri %d\n", tri, testTri(tab, dim));
 }
 
 void lanceTris(int ligne, int colonne, float tabResultats[ligne][colonne])
