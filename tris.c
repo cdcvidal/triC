@@ -90,14 +90,14 @@ void bubbleSort(int tab[], int dim, float *temps)
 void bubbleSortOpt(int tab[], int dim, float *temps)
 {
   int i, dimR = dim, test;
+
   clock_t t1, t2;
   t1 = clock();
+
   while (dimR > 1) {
     test = 1;
     for(i = 0; i < (dimR-1) ; i++){
-        //printf("dimR = %d, position i %d \n", dimR, i );
         if(tab[i] > tab[i+1] ){
-          //  printf("element a checher %d, element courant %d, position %d\n", tab[i], tab[i], i );
             permute(&tab[i], &tab[i+1]);
             test = 0;
         }
@@ -106,98 +106,88 @@ void bubbleSortOpt(int tab[], int dim, float *temps)
         break;
       dimR--;
     }
-    t2 = clock();
-    *temps = (float)(t2-t1) / (CLOCKS_PER_SEC);
-}
 
-void shakeSort0(int tab[], int dim, float *temps)
-{
-  int i, j, dimR = dim, rDim = 0;
-  clock_t t1, t2;
-  t1 = clock();
-  while (dimR > 1) {
-
-    for(i = rDim; i < (dimR-1) ; i++){
-        //printf("rDim = %d dimR = %d, position i %d \n", rDim, dimR, i );
-        if(tab[i] > tab[i+1] ){
-          //  printf("element a checher %d, element courant %d, position %d\n", tab[i], tab[i], i );
-            permute(&tab[i], &tab[i+1]);
-        }
-      }
-      dimR--;
-
-      for(j = dimR-1; j > 0 ; j--){
-          //printf("rDim = %d dimR = %d, position j %d \n",rDim, dimR, j );
-          if(tab[j] < tab[j-1] ){
-            //  printf("inverse element a checher %d, element courant %d, position %d, rDim %d\n", tab[j], tab[j], j, rDim );
-              permute(&tab[j], &tab[j-1]);
-          }
-        }
-        rDim++;
-    }
     t2 = clock();
     *temps = (float)(t2-t1) / (CLOCKS_PER_SEC);
 }
 
 void shakeSort(int tab[], int dim, float *temps)
 {
-  int k, j=0, l, dimR = dim, rDim = 0;
   clock_t t1, t2;
   t1 = clock();
+  int i ;
+  int booleenTableauTrie = 0 ;
+  int debut = 0 ;
+  int fin = dim - 1 ;
 
-  for(k = dim; k > 0; k--){
-  //  printf("rDim = %d dimR = %d, position k %d \n", rDim, dimR, k );
-    for(j = rDim+1 ; j < dimR ; j++ ){
-      if (tab[k] < tab[j]) {
-        // printf("k=%d, j=%d, tab[k] = %d < tab[j] = %d\n",k, j, tab[k], tab[j] );
-        permute(&tab[k], &tab[j]);
-      }
-    }
-    dimR--;
 
-    for(l = dimR; l > rDim ; l--){
-    //  printf("rDim = %d dimR = %d, position l %d \n", rDim, dimR, l );
-      if (tab[rDim] > tab[k-1]) {
-        // printf("k=%d, l=%d, tab[rDim] = %d > tab[k-1] = %d\n",k, l, tab[rDim], tab[k-1] );
-        permute(&tab[rDim], &tab[k-1]);
-      }
-    }
-    rDim++;
+
+  while (!booleenTableauTrie)
+  {
+      booleenTableauTrie = 1 ;
+
+      for ( i = debut ; i < fin ; i++)
+          if (tab[i+1] < tab[i])
+          {
+              permute(&tab[i], &tab[i+1]);
+              booleenTableauTrie = 0 ;
+          }
+
+      fin-- ;
+
+      for ( i = fin ; i > debut ; i--)
+          if (tab[i] < tab[i-1])
+          {
+              permute(&tab[i], &tab[i-1]);
+              booleenTableauTrie = 0 ;
+          }
+
+      debut++ ;
+
   }
-
-  t2 = clock();
-  *temps = (float)(t2-t1) / (CLOCKS_PER_SEC);
+    t2 = clock();
+    *temps = (float)(t2-t1) / (CLOCKS_PER_SEC);
 }
+
 
 
 void shellSort(int tab[], int dim, float *temps)
 {
-  int i = 0, j, k, suite;
-  int interval[dim];
+  int i , j , iteration, tmp ;
+  int k = 0 ;
+  int pas = 3;
+  clock_t t1, t2 ;
 
-  //interval
-  while(interval[i-1] < (dim/3) )
+
+  while ( k < dim/2)
+      k = pas * k + 1;
+
+  k/=pas ;
+
+  t1 = clock() ;
+
+  do
   {
-    if (i == 0) {
-      interval[i] = 1;
-    }else{
-      interval[i] = interval[i-1] * 3 +1;
-    }
-    i++;
+      for ( iteration = 0 ; iteration < k; iteration++)
+
+          for ( i = iteration + k ; i < dim; i+=k)
+          {
+              j = i - k ;
+              tmp = tab[i];
+
+              while( j >= iteration && tmp < tab[j] )
+              {
+                  tab[j+k] = tab[j];
+                  j-=k;
+              }
+
+              tab[j+k] = tmp ;
+
+          }
+      k/= pas ;
   }
-  i--;
-  clock_t t1, t2;
-  t1 = clock();
-  for(suite = i-1 ; suite >= 0; suite--)
-  {
-    for(k=0; k < dim-1 ; k+=interval[suite]){
-      int insert = tab[k];
-      for(j = k; j > 0 && tab[j-1] > insert ; j--){
-        tab[j] = tab[j-1];
-      }
-      tab[j] = insert;
-    }
-  }
+
+  while (k > 0);
   t2 = clock();
   *temps = (float)(t2-t1) / (CLOCKS_PER_SEC);
 }
