@@ -10,7 +10,7 @@ static int tabOrd[N];
 
 int tabInstruction[6] = {500,1000,10000,500,1000,10000};
 
-void (* listeFonctions[NBTRIS])(int *,int, float*) = {insertSort,selectionTri,bubbleSortOpt,shakeSort,shellSort,heapSort,quickSortW};
+void (* listeFonctions[NBTRIS])(int *,int, float*) = {insertionTri,selectionTri,bubbleSortOpt,shakeSort,shellSort,heapSort,quickSortW};
 
 void (* trouveFonction(int tri))(int *,int, float*)
 {

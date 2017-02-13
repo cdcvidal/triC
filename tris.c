@@ -2,7 +2,6 @@
 #include <time.h>
 #include <stdlib.h>
 
-//TODO shake sort, bubble sort, bubblesort opti, quicksort
 
 void permute(int *pos1, int *pos2)
 {
@@ -16,8 +15,9 @@ void permute(int *pos1, int *pos2)
 * TRIS
 */
 
+// tri par insertion
 
-void insertSort(int tab[], int dim, float *temps)
+void insertionTri(int tab[], int dim, float *temps)
 {
   clock_t t1, t2;
   t1 = clock();
@@ -42,6 +42,8 @@ void insertSort(int tab[], int dim, float *temps)
   *temps = (float)(t2-t1) / (CLOCKS_PER_SEC);
 }
 
+// tri par sélection
+
 void selectionTri(int tab[], int dim, float *temps)
 {
   int i, j, indice = 0 ;
@@ -61,6 +63,8 @@ void selectionTri(int tab[], int dim, float *temps)
   *temps = (float)(t2-t1) / (CLOCKS_PER_SEC);
 }
 
+// tri par échange simple
+
 void echangeTri(int tab[], int dim, float *temps)
 {
   int k, i;
@@ -79,6 +83,7 @@ void echangeTri(int tab[], int dim, float *temps)
   *temps = (float)(t2-t1) / (CLOCKS_PER_SEC);
 }
 
+// tri par échange optimisé  = bubbleSort Optimisé
 
 void bubbleSortOpt(int tab[], int dim, float *temps)
 {
@@ -105,6 +110,8 @@ void bubbleSortOpt(int tab[], int dim, float *temps)
   t2 = clock();
   *temps = (float)(t2-t1) / (CLOCKS_PER_SEC);
 }
+
+// shakeSort
 
 void shakeSort(int tab[], int dim, float *temps)
 {
@@ -142,7 +149,7 @@ void shakeSort(int tab[], int dim, float *temps)
   *temps = (float)(t2-t1) / (CLOCKS_PER_SEC);
 }
 
-
+// shellSort
 
 void shellSort(int tab[], int dim, float *temps)
 {
@@ -184,6 +191,8 @@ void shellSort(int tab[], int dim, float *temps)
   *temps = (float)(t2-t1) / (CLOCKS_PER_SEC);
 }
 
+// heapSort
+
 void placer(int g, int d, int *T)
 {
   int i, j, x, place_trouvee;
@@ -209,7 +218,6 @@ void placer(int g, int d, int *T)
   T[i] = x;                   /* i est la position définitive de x */
 }
 
-
 void heapSort(int tab[], int dim, float *temps)
 {
   clock_t t1, t2;
@@ -230,6 +238,7 @@ void heapSort(int tab[], int dim, float *temps)
   *temps = (float)(t2-t1) / (CLOCKS_PER_SEC);
 }
 
+// quickSort
 
 int partitionner(int tabqs[], int premier, int dernier)
 {
