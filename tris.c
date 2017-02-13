@@ -19,35 +19,42 @@ void permute(int *pos1, int *pos2)
 
 void insertSort(int tab[], int dim, float *temps)
 {
-  int i, j;
   clock_t t1, t2;
   t1 = clock();
-  for(i = 1 ; i < dim ; i++)
+
+  int i, j, tmp ;
+  for ( i = 1 ; i < dim; i++)
   {
-    int itemInsert = tab[i];
-    for(j=i ; j > 0 && tab[j-1] > itemInsert ; j--)
-      tab[j] = tab[j-1];
-    tab[j] = itemInsert;
+    tmp = tab[i];
+    j = i - 1 ;
+
+    while( j >= 0 && tmp < tab[j] )
+    {
+      tab[j+1] = tab[j];
+      j--;
+    }
+
+    tab[j+1] = tmp ;
+
   }
+
   t2 = clock();
   *temps = (float)(t2-t1) / (CLOCKS_PER_SEC);
 }
 
 void selectionTri(int tab[], int dim, float *temps)
 {
-  int k = dim, pmax = 0, j;
+  int i, j, indice = 0 ;
   clock_t t1, t2;
   t1 = clock();
 
-  for(k = 0; k < dim-1; k++)
+  for ( i = (dim - 1)  ; i > 0 ; i --)
   {
-    pmax = k;
-    for(j= k+1; j<dim ; j++ )
-    {
-      if(tab[j] < tab[pmax])
-        pmax = j;
-    }
-    permute(&tab[pmax], &tab[k]);
+      indice = i;
+      for ( j = 0 ; j < i ; j++ )
+          if ( tab[j] > tab[indice])
+              indice = j ;
+      permute(&tab[i], &tab[indice]);
   }
 
   t2 = clock();
@@ -108,29 +115,29 @@ void shakeSort(int tab[], int dim, float *temps)
 
   while (!booleenTableauTrie)
   {
-      booleenTableauTrie = 1 ;
+    booleenTableauTrie = 1 ;
 
-      for ( i = debut ; i < fin ; i++)
-          if (tab[i+1] < tab[i])
-          {
-              permute(&tab[i], &tab[i+1]);
-              booleenTableauTrie = 0 ;
-          }
+    for ( i = debut ; i < fin ; i++)
+      if (tab[i+1] < tab[i])
+      {
+        permute(&tab[i], &tab[i+1]);
+        booleenTableauTrie = 0 ;
+      }
 
-      fin-- ;
+    fin-- ;
 
-      for ( i = fin ; i > debut ; i--)
-          if (tab[i] < tab[i-1])
-          {
-              permute(&tab[i], &tab[i-1]);
-              booleenTableauTrie = 0 ;
-          }
+    for ( i = fin ; i > debut ; i--)
+      if (tab[i] < tab[i-1])
+      {
+        permute(&tab[i], &tab[i-1]);
+        booleenTableauTrie = 0 ;
+      }
 
-      debut++ ;
-
+    debut++ ;
   }
-    t2 = clock();
-    *temps = (float)(t2-t1) / (CLOCKS_PER_SEC);
+
+  t2 = clock();
+  *temps = (float)(t2-t1) / (CLOCKS_PER_SEC);
 }
 
 
@@ -142,9 +149,8 @@ void shellSort(int tab[], int dim, float *temps)
   int pas = 3;
   clock_t t1, t2 ;
 
-
   while ( k < dim/2)
-      k = pas * k + 1;
+    k = pas * k + 1;
 
   k/=pas ;
 
@@ -152,26 +158,26 @@ void shellSort(int tab[], int dim, float *temps)
 
   do
   {
-      for ( iteration = 0 ; iteration < k; iteration++)
+    for ( iteration = 0 ; iteration < k; iteration++)
 
-          for ( i = iteration + k ; i < dim; i+=k)
+      for ( i = iteration + k ; i < dim; i+=k)
+      {
+          j = i - k ;
+          tmp = tab[i];
+
+          while( j >= iteration && tmp < tab[j] )
           {
-              j = i - k ;
-              tmp = tab[i];
-
-              while( j >= iteration && tmp < tab[j] )
-              {
-                  tab[j+k] = tab[j];
-                  j-=k;
-              }
-
-              tab[j+k] = tmp ;
-
+              tab[j+k] = tab[j];
+              j-=k;
           }
-      k/= pas ;
-  }
 
+          tab[j+k] = tmp ;
+
+        }
+    k/= pas ;
+  }
   while (k > 0);
+
   t2 = clock();
   *temps = (float)(t2-t1) / (CLOCKS_PER_SEC);
 }
