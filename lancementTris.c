@@ -10,7 +10,7 @@ static int tabOrd[N];
 
 int tabInstruction[6] = {500,1000,10000,500,1000,10000};
 
-void (* listeFonctions[NBTRIS])(int *,int, float*) = {insertSort,selectionTri,bubbleSortOpt,shakeSort,shellSort,heapSort,quickSort};
+void (* listeFonctions[NBTRIS])(int *,int, float*) = {insertSort,selectionTri,bubbleSortOpt,shakeSort,shellSort,heapSort,quickSortW};
 
 void (* trouveFonction(int tri))(int *,int, float*)
 {
@@ -146,7 +146,6 @@ int main(void) {
   int request = 0;
   printf("Que voulez vous tester ?\n (0 = Tableau comparatif )\n (1 = Tri par insertion)\n (2 = Tri par sélection)\n (3 = Tri par échange)\n (4 = Shake sort)\n (5 = Shell sort)\n (6 = Heap sort)\n (7 = Quick sort)\n");
   scanf("%d", &request);
-  //printf("%d\n", request);
 
   switch (request) {
     case 0:
