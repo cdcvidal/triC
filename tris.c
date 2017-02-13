@@ -82,26 +82,28 @@ void echangeTri(int tab[], int dim, float *temps)
 
 void bubbleSortOpt(int tab[], int dim, float *temps)
 {
-  int i, dimR = dim, test;
-
   clock_t t1, t2;
   t1 = clock();
 
-  while (dimR > 1) {
-    test = 1;
-    for(i = 0; i < (dimR-1) ; i++){
-        if(tab[i] > tab[i+1] ){
-            permute(&tab[i], &tab[i+1]);
-            test = 0;
-        }
-      }
-      if(test == 1)
-        break;
-      dimR--;
-    }
+  int i;
+  int booleenTableauTrie = 0 ;
+  int lenght = dim - 1 ;
 
-    t2 = clock();
-    *temps = (float)(t2-t1) / (CLOCKS_PER_SEC);
+  while (! booleenTableauTrie)
+  {
+    booleenTableauTrie = 1 ;
+    for ( i = 0 ; i < lenght ; i++ )
+      if (tab[i+1] < tab[i])
+      {
+        permute(&tab[i+1], &tab[i]);
+        booleenTableauTrie = 0 ;
+      }
+
+    lenght-- ;
+  }
+
+  t2 = clock();
+  *temps = (float)(t2-t1) / (CLOCKS_PER_SEC);
 }
 
 void shakeSort(int tab[], int dim, float *temps)
