@@ -209,24 +209,25 @@ void placer(int g, int d, int *T)
   T[i] = x;                   /* i est la position définitive de x */
 }
 
+
 void heapSort(int tab[], int dim, float *temps)
 {
-  int i;
   clock_t t1, t2;
   t1 = clock();
-  for(i = dim/2 ; i >= 0 ; i--)
-    placer(i, dim-1, tab);
 
-  for(i= dim-1 ; i >=1 ; i--)
+  int i ;
+
+  for ( i = dim/2 ; i >= 0 ; i--)
+      placer(i, dim-1, tab);
+
+  for ( i = (dim - 1); i > 0 ; i--)
   {
-    int temp = tab[0];
-    tab[0] = tab[i];
-    tab[i] = temp;
-    placer(0, i-1, tab);
+      permute(&tab[0], &tab[i]);
+      placer(0, i-1, tab);
   }
+
   t2 = clock();
   *temps = (float)(t2-t1) / (CLOCKS_PER_SEC);
-
 }
 
 
@@ -235,6 +236,7 @@ int partitionner(int tabqs[], int premier, int dernier)
   int p = tabqs[premier];
   int i = premier - 1;
   int j = dernier + 1;
+
   for(;;)
   {
     do {
@@ -266,6 +268,7 @@ void quickSortW(int tabqs[], int dim, float *temps)
   int prem = 0, der = dim;
   clock_t t1, t2;
   t1 = clock();
+
   quickSort(tabqs, prem, der);
 
   t2 = clock();
