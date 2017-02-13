@@ -72,20 +72,6 @@ void echangeTri(int tab[], int dim, float *temps)
   *temps = (float)(t2-t1) / (CLOCKS_PER_SEC);
 }
 
-void bubbleSort(int tab[], int dim, float *temps)
-{
-  int i, dimR = dim;
-  while (dimR > 1) {
-    for(i = 0; i < (dimR-1) ; i++){
-        //printf("dimR = %d, position i %d \n", dimR, i );
-        if(tab[i] > tab[i+1] ){
-            //printf("element a checher %d, element courant %d, position %d\n", tab[i], tab[i], i );
-            permute(&tab[i], &tab[i+1]);
-        }
-      }
-      dimR--;
-    }
-}
 
 void bubbleSortOpt(int tab[], int dim, float *temps)
 {
@@ -119,8 +105,6 @@ void shakeSort(int tab[], int dim, float *temps)
   int booleenTableauTrie = 0 ;
   int debut = 0 ;
   int fin = dim - 1 ;
-
-
 
   while (!booleenTableauTrie)
   {
@@ -238,59 +222,44 @@ void heapSort(int tab[], int dim, float *temps)
 }
 
 
-int partitionner(int tabqs[], int premier, int dernier, int pivot)
+int partitionner(int tabqs[], int premier, int dernier)
 {
-  int j, i=premier;
-  // échange le pivot avec le dernier du tableau , le pivot devient le dernier du tableau
-  permute(&tabqs[pivot], &tabqs[dernier]);
-  j = premier;
-  while (i == dernier-1) {
-    if (tabqs[i] <= tabqs[dernier]) {
-      permute(&tabqs[i], &tabqs[j]);
-      j++;
-    }
-    permute(&tabqs[dernier], &tabqs[j]);
-    return j;
+  int p = tabqs[premier];
+  int i = premier - 1;
+  int j = dernier + 1;
+  for(;;)
+  {
+    do {
+      i++;
+    } while(tabqs[i] < p);
+    do {
+      j--;
+    } while(tabqs[j] > p);
+
+    if (i >= j)
+      return j;
+    permute(&tabqs[i], &tabqs[j]);
   }
 }
 
-void triRapide(int tabqs[], int prem, int der)
+void quickSort(int tabqs[], int gauche, int droite)
 {
   int p;
-  if(tabqs[prem] < tabqs[der])
+  if(gauche < droite)
   {
-    p = tabqs[prem];
-    p = partitionner(tabqs, prem, der, p);
-    triRapide(tabqs, prem, p-1);
-    triRapide(tabqs, p+1, der);
+    p = partitionner(tabqs, gauche, droite);
+    quickSort(tabqs, gauche, p);
+    quickSort(tabqs, p+1, droite);
   }
 }
-void quickSort(int tabqs[], int dim, float *temps)
+
+void quickSortW(int tabqs[], int dim, float *temps)
 {
-  int prem = 0, der = dim-1;
+  int prem = 0, der = dim;
   clock_t t1, t2;
   t1 = clock();
-  triRapide(tabqs, prem, der);
+  quickSort(tabqs, prem, der);
 
   t2 = clock();
   *temps = (float)(t2-t1) / (CLOCKS_PER_SEC);
 }
-
-
-// int main(void) {
-//   int dim500 = 50;
-//   int tab500[dim500];
-//   float temps[6][7];
-//   //initTab500(tab500, dim500);
-//   randomTab(tab500, dim500);
-//   displayTab(tab500, dim500);
-//   //heapSort(tab500, dim500, &temps[5][0]);
-//   //bubbleSortOpt(tab500, dim500);
-//   quickSort(tab500, dim500);
-//   printf("test tri %d\n", testTri(tab500, dim500));
-//   displayTab(tab500, dim500);
-//
-//   // TODO
-//   //displayMatrice(temps, 6, 7);
-//   return 0;
-// }
