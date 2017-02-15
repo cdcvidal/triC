@@ -240,46 +240,93 @@ void heapSort(int tab[], int dim, float *temps)
 
 // quickSort
 
-int partitionner(int tabqs[], int premier, int dernier)
+void quickSort3(int tableau[], int premier, int taille)
 {
-  int p = tabqs[premier];
-  int i = premier - 1;
-  int j = dernier + 1;
+    int debut = premier-1, fin = taille+1 ;
 
-  for(;;)
-  {
-    do {
-      i++;
-    } while(tabqs[i] < p);
-    do {
-      j--;
-    } while(tabqs[j] > p);
+    int booleenTrie = 0,pivot = tableau[premier];
 
-    if (i >= j)
-      return j;
-    permute(&tabqs[i], &tabqs[j]);
-  }
+
+    if(premier >= taille)
+        return;
+
+
+
+    while(! booleenTrie)
+    {
+        do
+            fin--;
+        while(tableau[fin] > pivot);
+
+        do
+            debut++;
+        while(tableau[debut] < pivot);
+
+
+        if(debut < fin)
+        {
+            permute(&tableau[debut], &tableau[fin]);
+            booleenTrie = 0;
+        }
+        else booleenTrie = 1 ;
+    }
+
+    quickSort3(tableau, premier, fin);
+    quickSort3(tableau, fin+1, taille);
 }
 
-void quickSort(int tabqs[], int gauche, int droite)
+void quickSortW (int tabqs[], int dim, float *temps)
 {
-  int p;
-  if(gauche < droite)
-  {
-    p = partitionner(tabqs, gauche, droite);
-    quickSort(tabqs, gauche, p);
-    quickSort(tabqs, p+1, droite);
-  }
+    int prem = 0, der = dim;
+    clock_t t1, t2;
+    t1 = clock();
+
+    quickSort3 ( tabqs,  prem, der -1);
+
+    t2 = clock();
+    *temps = (float)(t2-t1) / (CLOCKS_PER_SEC);
+
 }
-
-void quickSortW(int tabqs[], int dim, float *temps)
-{
-  int prem = 0, der = dim;
-  clock_t t1, t2;
-  t1 = clock();
-
-  quickSort(tabqs, prem, der);
-
-  t2 = clock();
-  *temps = (float)(t2-t1) / (CLOCKS_PER_SEC);
-}
+// int partitionner(int tabqs[], int premier, int dernier)
+// {
+//   int p = tabqs[premier];
+//   int i = premier - 1;
+//   int j = dernier + 1;
+//
+//   for(;;)
+//   {
+//     do {
+//       i++;
+//     } while(tabqs[i] < p);
+//     do {
+//       j--;
+//     } while(tabqs[j] > p);
+//
+//     if (i >= j)
+//       return j;
+//     permute(&tabqs[i], &tabqs[j]);
+//   }
+// }
+//
+// void quickSort(int tabqs[], int gauche, int droite)
+// {
+//   int p;
+//   if(gauche < droite)
+//   {
+//     p = partitionner(tabqs, gauche, droite);
+//     quickSort(tabqs, gauche, p);
+//     quickSort(tabqs, p+1, droite);
+//   }
+// }
+//
+// void quickSortW(int tabqs[], int dim, float *temps)
+// {
+//   int prem = 0, der = dim;
+//   clock_t t1, t2;
+//   t1 = clock();
+//
+//   quickSort(tabqs, prem, der);
+//
+//   t2 = clock();
+//   *temps = (float)(t2-t1) / (CLOCKS_PER_SEC);
+// }
