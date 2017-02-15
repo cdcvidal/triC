@@ -144,48 +144,53 @@ void tableauComparatif(int num )
 
 int main(void) {
   int request = 0;
-  printf("Que voulez vous tester ?\n (0 = Tableau comparatif )\n (1 = Tri par insertion)\n (2 = Tri par sélection)\n (3 = Tri par échange)\n (4 = Shake sort)\n (5 = Shell sort)\n (6 = Heap sort)\n (7 = Quick sort)\n");
-  scanf("%d", &request);
 
-  switch (request) {
-    case 0:
-      printf("\nTableau comparatif\n");
-      tableauComparatif(-1);
-      break;
-    case 1:
-      printf("tri 1\n");
-      tableauComparatif(0);
-      break;
-    case 2:
-      printf("tri 2\n");
-      tableauComparatif(1);
-      break;
-    case 3:
-      printf("tri 3\n");
-      tableauComparatif(2);
-      break;
-    case 4:
-      printf("tri 4\n");
-      tableauComparatif(3);
-      break;
-    case 5:
-      printf("tri 5\n");
-      tableauComparatif(4);
-      break;
-    case 6:
-      printf("tri 6\n");
-      tableauComparatif(5);
-      break;
-    case 7:
-      printf("tri 7\n");
-      tableauComparatif(6);
-      break;
-    default:
-      printf("Tableau comparatif");
-      tableauComparatif(-1);
-  }
+  do {
 
+    printf("Que voulez vous tester ?\n (0 = Tableau comparatif )\n (1 = Tri par insertion)\n (2 = Tri par sélection)\n (3 = Tri par échange)\n (4 = Shake sort)\n (5 = Shell sort)\n (6 = Heap sort)\n (7 = Quick sort)\n (9 = Quitter)\n");
+    scanf("%d", &request);
 
+    switch (request) {
+      case 0:
+        printf("\nTableau comparatif\n");
+        tableauComparatif(-1);
+        break;
+      case 1:
+        printf("tri 1\n");
+        tableauComparatif(0);
+        break;
+      case 2:
+        printf("tri 2\n");
+        tableauComparatif(1);
+        break;
+      case 3:
+        printf("tri 3\n");
+        tableauComparatif(2);
+        break;
+      case 4:
+        printf("tri 4\n");
+        tableauComparatif(3);
+        break;
+      case 5:
+        printf("tri 5\n");
+        tableauComparatif(4);
+        break;
+      case 6:
+        printf("tri 6\n");
+        tableauComparatif(5);
+        break;
+      case 7:
+        printf("tri 7\n");
+        tableauComparatif(6);
+        break;
+      case 9:
+        printf("Le programme a quitter.\n");
+        break;
+      default:
+          printf("Le choix demandé %d n'est pas référencé.\n\n", request);
+    }
+
+  } while(request != 9);
 
   return 0;
 }
